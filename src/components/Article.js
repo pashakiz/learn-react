@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import React, {Component, PureComponent} from 'react'
 
-class Article extends Component {
+class Article extends PureComponent {
     // state = {
     //     isOpen: false
     // }
@@ -10,7 +10,8 @@ class Article extends Component {
         super(props)
 
         this.state = {
-            isOpen: props.defaultOpen
+            isOpen: props.defaultOpen,
+            count: 0
         }
     }
 
@@ -27,8 +28,10 @@ class Article extends Component {
         return (
             <div className='card mx-auto' style={{width: '70%'}}>
                 <div className='card-header'>
-                    <h2>
+                    <h2 onClick = {this.incrementCounter}>
                         {article.title}
+                        <br></br>
+                        <span className="text-monospace h6 text-muted">clicked: {this.state.count}</span>
                         <button onClick={this.handleClick} className="btn btn-primary btn-md float-right">
                             {this.state.isOpen ? 'Close' : 'Open'}
                         </button>
@@ -57,9 +60,10 @@ class Article extends Component {
         })
     }
 
-    //UPDATE METHOD 2
+    //UPDATE METHOD 2 (no need if PureComponent)
     // shouldComponentUpdate(nextProps, nextState) {
     //     console.log('---', 'shouldComponentUpdate')
+    //     return this.state.isOpen !== nextState.isOpen
     // }
 
     //UPDATE METHOD 3
@@ -77,6 +81,11 @@ class Article extends Component {
         console.log('---', 'Unmounting')
     }
 
+    incrementCounter = () => {
+        this.setState({
+            count: this.state.count + 1
+        })
+    }
 
     handleClick = () => {
         console.log('---', 'clicked');
