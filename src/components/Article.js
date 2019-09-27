@@ -10,7 +10,6 @@ class Article extends PureComponent {
         super(props)
 
         this.state = {
-            isOpen: props.defaultOpen,
             count: 0
         }
     }
@@ -22,9 +21,10 @@ class Article extends PureComponent {
 
     //INIT METHOD 3
     render() {
-        console.log('---', this.props);
-        const {article} = this.props;
-        const body = this.state.isOpen && <section className="card-text">{article.text}</section>
+        const {article, isOpen, onButtonClick} = this.props;
+        //this.state.openArticleId = article.id;
+        //console.log('---', this.state.openArticleId);
+        const body = isOpen && <section className="card-text">{article.text}</section>
         return (
             <div className='card mx-auto' style={{width: '70%'}}>
                 <div className='card-header'>
@@ -32,8 +32,8 @@ class Article extends PureComponent {
                         {article.title}
                         <br></br>
                         <span className="text-monospace h6 text-muted">clicked: {this.state.count}</span>
-                        <button onClick={this.handleClick} className="btn btn-primary btn-md float-right">
-                            {this.state.isOpen ? 'Close' : 'Open'}
+                        <button onClick={onButtonClick} className="btn btn-primary btn-md float-right">
+                            {isOpen ? 'Close' : 'Open'}
                         </button>
                     </h2>
                 </div>
@@ -53,12 +53,12 @@ class Article extends PureComponent {
     }
 
     //UPDATE METHOD 1
-    componentWillReceiveProps(nextProps) {
-        console.log('---', 'componentWillReceiveProps')
-        if (nextProps.defaultOpen !== this.props.defaultOpen) this.setState({
-            isOpen: nextProps.defaultOpen
-        })
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     console.log('---', 'componentWillReceiveProps')
+    //     if (nextProps.defaultOpen !== this.props.defaultOpen) this.setState({
+    //         isOpen: nextProps.defaultOpen
+    //     })
+    // }
 
     //UPDATE METHOD 2 (no need if PureComponent)
     // shouldComponentUpdate(nextProps, nextState) {
@@ -87,12 +87,12 @@ class Article extends PureComponent {
         })
     }
 
-    handleClick = () => {
-        console.log('---', 'clicked');
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
-    }
+    // handleClick = () => {
+    //     console.log('---', 'clicked');
+    //     this.setState({
+    //         isOpen: !this.state.isOpen
+    //     })
+    // }
 }
 
 export default Article
